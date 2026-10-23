@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deployment Test App — Frontend &amp; Backend</title>
+  <meta name="description" content="A simple fullstack deployment verification app with backend environment variable support.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-glow top-left"></div>
+  <div class="background-glow bottom-right"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-icon">🚀</div>
+        <div>
+          <h1 class="main-title">Fullstack Deployment Test</h1>
+          <p class="subtitle">Frontend + Node.js Backend with Live <code>.env</code> Verification</p>
+        </div>
+      </div>
+      <div class="status-badge" id="system-status-badge">
+        <span class="status-dot ping-animation" id="status-dot"></span>
+        <span id="status-label">Checking Backend...</span>
+        <span class="latency-tag" id="latency-tag">-- ms</span>
+      </div>
+    </header>
+
+    <!-- Backend URL Configuration Bar -->
+    <section class="card config-bar">
+      <div class="config-bar-inner">
+        <div class="input-label-group">
+          <label for="backend-url-input">Target Backend API URL</label>
+          <span class="helper-text">Supports same-origin or cross-origin deployed backends</span>
+        </div>
+        <div class="input-action-group">
+          <input 
+            type="url" 
+            id="backend-url-input" 
+            placeholder="http://localhost:5005" 
+            spellcheck="false"
+          />
+          <button id="btn-reconnect" class="btn btn-primary">
+            <span>🔄 Re-check</span>
+          </button>
+          <button id="btn-reset-url" class="btn btn-secondary">
+            Auto-detect
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Grid: Env Display & Interactive Tester -->
+    <main class="grid-layout">
+      <!-- Card 1: Backend Environment Variables (.env) -->
+      <section class="card env-card">
+        <div class="card-header">
+          <div class="card-icon">🔐</div>
+          <div>
+            <h2>Backend .env Configuration</h2>
+            <p>Live values extracted from <code>backend/.env</code> via API</p>
+          </div>
+        </div>
+
+        <div class="env-table-container">
+          <table class="env-table" id="env-table">
+            <thead>
+              <tr>
+                <th>Variable Name</th>
+                <th>Value from .env</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="env-table-body">
+              <tr>
+                <td colspan="3" class="loading-cell">Fetching environment data from backend...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="message-banner" id="backend-message-box">
+          <span class="banner-tag">MESSAGE FROM .ENV</span>
+          <p id="env-message-text" class="banner-text">Connecting to server...</p>
+        </div>
+      </section>
+
+      <!-- Card 2: Interactive API Ping & Echo Tester -->
+      <section class="card api-tester-card">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <div>
+            <h2>Interactive Endpoint Tester</h2>
+            <p>Test GET and POST HTTP routes against the backend</p>
+          </div>
+        </div>
+
+        <div class="test-controls">
+          <div class="button-row">
+            <button id="btn-test-health" class="btn btn-outline">
+              GET /api/health
+            </button>
+            <button id="btn-test-config" class="btn btn-outline">
+              GET /api/config
+            </button>
+          </div>
+
+          <div class="echo-form-group">
+            <label for="echo-payload-input">POST /api/echo Test Payload</label>
+            <div class="echo-input-row">
+              <input 
+                type="text" 
+                id="echo-payload-input" 
+                value="Testing deployment at: "
+                placeholder="Type a message to echo"
+              />
+              <button id="btn-test-echo" class="btn btn-accent">
+                Send POST
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="response-viewer">
+          <div class="response-header">
+            <span class="response-title">API Response Inspector</span>
+            <span class="response-meta" id="response-meta">Ready</span>
+          </div>
+          <pre><code id="response-json-display">// Responses will appear here...</code></pre>
+        </div>
+      </section>
+    </main>
+
+    <!-- Deployment Guide & Info Section -->
+    <section class="card guides-card">
+      <div class="card-header">
+        <div class="card-icon">📋</div>
+        <div>
+          <h2>Deployment Readiness Checklist</h2>
+          <p>Quick tips for deploying this application across popular hosting platforms</p>
+        </div>
+      </div>
+
+      <div class="guide-grid">
+        <div class="guide-item">
+          <div class="guide-badge">Render / Railway</div>
+          <h3>Combined or Backend Hosting</h3>
+          <p>Set Root Directory to <code>backend</code>, Build Command to <code>npm install</code>, Start Command to <code>npm start</code>. Add your environment variables in the dashboard.</p>
+        </div>
+
+        <div class="guide-item">
+          <div class="guide-badge">Vercel / Netlify</div>
+          <h3>Static Frontend Hosting</h3>
+          <p>Set Publish Directory to <code>frontend</code>. In the UI, enter your deployed backend URL in the Target Backend field above.</p>
+        </div>
+
+        <div class="guide-item">
+          <div class="guide-badge">Environment Variables</div>
+          <h3>Configuring .env</h3>
+          <p>Never commit your real secret <code>.env</code> to public git repositories. Use the provided <code>.env.example</code> as a template for production environments.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Simple Fullstack Deployment Test &bull; Node.js Express Backend with <code>.env</code> &bull; Vanilla HTML/CSS/JS</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "simple-deployment-test-app",
+  "version": "1.0.0",
+  "description": "Simple full-stack website (frontend + backend with .env) for deployment testing",
+  "scripts": {
+    "postinstall": "cd backend && npm install",
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "backend": "cd backend && npm start"
+  },
+  "keywords": ["deployment", "test", "frontend", "backend", "express", "dotenv"],
+  "author": "",
+  "license": "ISC"
+}
