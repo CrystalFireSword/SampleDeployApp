@@ -12,6 +12,9 @@ RUN rm -rf ./*
 # Copy frontend static assets into Nginx web root
 COPY index.html style.css app.js ./
 
+# Configure Nginx to proxy API requests over the Compose network.
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Document exposed HTTP port
 EXPOSE 80
 

@@ -53,6 +53,19 @@ The backend server will start on **http://localhost:5000** and will output:
 - **Option A (Served by Backend):** Open [http://localhost:5000](http://localhost:5000) directly in your browser.
 - **Option B (Independent Frontend):** Double-click `frontend/index.html` or run any local server (Live Server / Vite / python http.server). The frontend includes a backend URL configurator to test cross-origin requests.
 
+## 🐳 Run with Docker Compose
+
+From the repository root, build and start both containers:
+
+```bash
+docker compose up --build
+```
+
+Open [http://localhost:8080](http://localhost:8080). The frontend sends API
+requests to the same origin, and Nginx forwards `/api/*` to the `backend`
+service on Compose's private network. Stop the services with
+`docker compose down`.
+
 ---
 
 ## ⚙️ Environment Variables (`backend/.env`)
